@@ -19,7 +19,7 @@ const getBlogs = async () => {
 
 export const generateMetadata = async () => {
   return {
-    title: "Blogs | TheDermaHouse",
+    title: "Blogs | TheDermaHouse blogs",
     description: "Explore our latest blog posts on dermatology and wellness.",
     alternates: {
       canonical: `https://thedermahouse.com/blogs`,
