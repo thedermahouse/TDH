@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+}
+@import "tailwindcss/utilities";
+@import "./common.css";
+
+@theme {
+  --color-dh-p: #b67f63;
+  --color-dh-s: #f76931;
+  --color-dh-t: #f76931;
+  --color-dh-q: #edd2c7;
+  --color-dh-new: #d2d2d2;
+  --color-dh-newsecondory: #8a8a8a;
+
+  --font-montserrat: var(--font-montserrat), "sans-serif";
+  --font-hallengerSerif: "var(--font-hallengerSerif)", "sans-serif";
+}
+
+@utility dh-sm-btn {
+  @apply btn  shadow-none h-10 lg:h-14 px-5 lg:px-10  rounded-none text-dh-newsecondory font-secondary font-semibold text-xs hover:opacity-80 hover:bg-dh-newsecondory hover:text-white border-0;
+}
+
+.dh-sm-btn-w {
+  @apply dh-sm-btn shadow-none !text-white !bg-dh-s hover:!bg-white hover:!text-dh-newsecondory;
+}
+
+* {
+  @apply font-secondary;
+}
+
+.font-primary {
+  @apply font-hallengerSerif;
+}
+
+@utility font-secondary {
+  @apply font-montserrat;
+}
+
+.header {
+  .swiper-pagination {
+    @apply lg:!bottom-8;
+    .swiper-pagination-bullet {
+      &.swiper-pagination-bullet-active {
+        @apply bg-dh-newsecondory;
+      }
+      @apply bg-white opacity-100 w-8 h-1 rounded-none;
+    }
+  }
+}
+
+.ac {
+  @apply flex items-center justify-center;
+}
+
+.trs {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.service-image {
+  @apply relative;
+  &::before {
+    content: "";
+    @apply absolute top-0 right-0 left-0 bottom-0 z-10 transition-all duration-300 ease-in-out opacity-0;
+    background: linear-gradient(
+      to top,
+      #f7693166 0%,
+      #00000000 80%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  &:hover {
+    &::before {
+      @apply opacity-100;
+    }
+  }
+}
+
+.bg-progress::-webkit-progress-value {
+  @apply bg-[#ededed];
+}
+
+.bg-progress::-webkit-progress-bar {
+  @apply bg-transparent;
+}
+
+.bg-progress::-moz-progress-bar {
+  @apply bg-dh-q;
+}
+
+.dropdown-close .dropdown-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.text-white-border {
+  text-shadow: -0.6px -0.6px #ffffff33, 0.6px 0.6px #ffffff33,
+    -0.6px 0.6px #ffffff33, 0.6px 0.6px #ffffff33;
+}
+
+.text-white-border:hover {
+  text-shadow: unset;
+}
+
+@media (width >= 1280px) and (width <= 1400px) {
+  .container,
+  .lg\:container {
+    @apply !w-10/12;
+  }
+}

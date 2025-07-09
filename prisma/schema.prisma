@@ -1,0 +1,160 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model PartContents {
+  key     PartType @id @unique
+  content Json
+}
+
+enum PartType {
+  HOME
+  ABOUT_US
+  FOLLOW_US
+  MARQUEE_STRIP
+  NAVIGATION
+  TOP_NAVIGATION
+  FOOTER
+  CONTACT_US
+}
+
+model Services {
+  id                               Int           @id @default(autoincrement())
+  name                             String        @unique
+  description                      String        @db.Text
+  metaTitle                        String?   // <-- Add this
+  metaDescription                  String?   // <-- Add this
+  homePageImageURL                 String?
+  servicePageImage1URL             String?
+  servicePageImage2URL             String?
+  faqImageURL                      String?
+  servicePageDescription           String?       @db.Text
+  servicePageImage1Description     String?       @db.Text
+  servicePageSubServiceTitle       String?
+  servicePageSubServiceDescription String?       @db.Text
+  isDeleted                        Boolean       @default(false)
+  subServices                      SubServices[]
+}
+
+model SubServices {
+  id                        Int               @id @default(autoincrement())
+  priority                  Int               @default(0)
+  serviceId                 Int
+  name                      String
+  description               String            @db.Text
+  metaTitle                 String?   // <-- Add this
+  metaDescription           String?   // <-- Add this
+  subServicePageDescription String?           @db.Text
+  servicePageImageURL       String?
+  subServicePageImage1URL   String?
+  subServicePageImage2URL   String?
+  actionUrl                 String?
+  sections                  Json              @default("[]")
+  isDeleted                 Boolean           @default(false)
+  isShow                    Boolean?          @default(true)
+  service                   Services          @relation(fields: [serviceId], references: [id])
+  faqs                      SubServiceFAQ[]
+  plans                     SubServicePlans[]
+  testimonials              Testimonials[]
+
+  @@unique([serviceId, priority])
+  @@unique([serviceId, name])
+}
+
+model Testimonials {
+  id           Int          @id @default(autoincrement())
+  priority     Int          @default(0)
+  subServiceId Int?
+  subService   SubServices? @relation(fields: [subServiceId], references: [id])
+  content      String       @db.Text
+  author       String
+
+  @@unique([priority, subServiceId])
+}
+
+model SubServicePlans {
+  id           Int                    @id @default(autoincrement())
+  subServiceId Int
+  name         String
+  description  String                 @db.Text
+  iconName     PlanIcon
+  price        Float
+  paymentTerms SubServicePaymentTerms
+  subService   SubServices            @relation(fields: [subServiceId], references: [id])
+
+  @@unique([subServiceId, name])
+}
+
+model Blogs {
+  id                  Int      @id @default(autoincrement())
+  title               String
+  slug                String   @unique
+  description         String?
+  content             Json?    // Store rich content or sections
+  metaTitle           String?
+  metaDescription     String?
+  imageURL            String?
+  imageDescription    String?
+  isPublished         Boolean  @default(true)
+  isDeleted           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  sections            Json?              @default("[]")
+}
+
+enum PlanIcon {
+  LEAF
+  CROWN
+  FAMILY
+  PREMIUM
+}
+
+enum SubServicePaymentTerms {
+  HOURLY
+  DAILY
+  MONTHLY
+  YEARLY
+}
+
+model SubServiceFAQ {
+  id           Int         @id @default(autoincrement())
+  subServiceId Int
+  question     String      @db.Text
+  answer       String      @db.Text
+  subService   SubServices @relation(fields: [subServiceId], references: [id])
+}
+
+model Files {
+  id        Int      @id @default(autoincrement())
+  md5       String   @unique
+  filename  String
+  content   Bytes
+  createdAt DateTime @default(now())
+}
+
+model ContactUs {
+  id           Int      @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String
+  phone        String
+  message      String
+  enquiry_from String?
+  createdAt    DateTime @default(now())
+}
+
+model Pages {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?  @db.Text
+  meta_image  String?
+  slug        String   @unique
+  content     String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
