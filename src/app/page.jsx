@@ -6,7 +6,7 @@ export const generateMetadata = async () => {
 
   const { seo } = content;
   return {
-    title: seo?.metaTitle || "The Derma House",
+    title: seo?.metaTitle || "The Derma House 2",
     description: seo?.metaDescription || "Complete dermal solutions",
     images: [seo?.metaImage],
     alternates: {
