@@ -13,7 +13,7 @@ export const generateMetadata = async () => {
       canonical: "https://thedermahouse.com",
     },
   };
-};
+}; 
 
 export default async function Home() {
   const part = await getPart("HOME");
