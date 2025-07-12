@@ -19,7 +19,7 @@ const getBlogs = async () => {
 
 export const generateMetadata = async () => {
   return {
-    title: "Blogs | TheDermaHouse blogs",
+    title: "Blogs | TheDermaHouse blogs and articles",
     description: "Explore our latest blog posts on dermatology and wellness.",
     alternates: {
       canonical: `https://thedermahouse.com/blogs`,
@@ -41,7 +41,7 @@ export default async function BlogsPage() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <h1 className="font-hallengerSerif text-4xl text-center mb-12">
-              Our Blogs 2 
+              Our Blogs 3 
             </h1>
             <p className="text-center text-base-content opacity-75">
               No blogs available at the moment.
