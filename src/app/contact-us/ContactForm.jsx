@@ -25,14 +25,39 @@ export default function ContactForm({ enquiry_from }) {
     }
   }, [enquiry_from]);
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    message: "",
-    enquiry_from: "",
-  });
+ const [formData, setFormData] = useState({
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  message: "",
+  enquiry_from: "",
+  utm_source: "",
+  utm_medium: "",
+  utm_campaign: "",
+  utm_term: "",
+  utm_content: "",
+});
+
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const utm_source = params.get("utm_source") || "";
+  const utm_medium = params.get("utm_medium") || "";
+  const utm_campaign = params.get("utm_campaign") || "";
+  const utm_term = params.get("utm_term") || "";
+  const utm_content = params.get("utm_content") || "";
+
+  setFormData((prev) => ({
+    ...prev,
+    enquiry_from: enquiry_from || "",
+    utm_source,
+    utm_medium,
+    utm_campaign,
+    utm_term,
+    utm_content,
+  }));
+}, [enquiry_from]);
+
 
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

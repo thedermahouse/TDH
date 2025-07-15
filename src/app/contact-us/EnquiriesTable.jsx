@@ -47,61 +47,68 @@ export default function EnquiriesTable({ data, del }) {
               <th>Phone</th>
               <th className="text-center">Message</th>
               <th>Enquiry From</th>
+              <th>UTM Source</th>
+              <th>UTM Medium</th> 
+              <th>UTM Campaign</th>
+              <th>UTM Term</th>
+              <th>UTM Content</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {data?.map((enquiry, index) => (
               <tr key={index}>
-                <th>{index + 1}</th>
-                <td>{enquiry?.firstName}</td>
-                <td>{enquiry?.email}</td>
-                <td>{enquiry?.phone}</td>
-                <td>
-                  <div className="flex flex-col items-center">
-                    <div>
-                      {expandedStates[index]
-                        ? ""
-                        : getShortMessage(enquiry?.message)}
-                    </div>
-                    {enquiry?.message &&
-                      enquiry.message.split(" ").length > 1 && (
-                        <button
-                          onClick={() => toggleMessage(index, enquiry?.message)}
-                          className="btn btn-xs mt-2 "
-                        >
-                          show more
-                        </button>
-                      )}
-                  </div>
-                </td>
-                <td>
-                  <span
-                    className={`${
-                      enquiry?.enquiry_from ? "badge badge-primary" : ""
-                    }`}
-                  >
-                    {enquiry?.enquiry_from}
-                  </span>
-                </td>
+  <th>{index + 1}</th>
+  <td>{enquiry?.firstName}</td>
+  <td>{enquiry?.email}</td>
+  <td>{enquiry?.phone}</td>
+  <td>
+    <div className="flex flex-col items-center">
+      <div>
+        {expandedStates[index] ? "" : getShortMessage(enquiry?.message)}
+      </div>
+      {enquiry?.message && enquiry.message.split(" ").length > 1 && (
+        <button
+          onClick={() => toggleMessage(index, enquiry?.message)}
+          className="btn btn-xs mt-2"
+        >
+          show more
+        </button>
+      )}
+    </div>
+  </td>
+  <td>
+    <span
+      className={`${
+        enquiry?.enquiry_from ? "badge badge-primary" : ""
+      }`}
+    >
+      {enquiry?.enquiry_from}
+    </span>
+  </td>
+  <td>{enquiry?.utm_source || "-"}</td>
+  <td>{enquiry?.utm_medium || "-"}</td>
+  <td>{enquiry?.utm_campaign || "-"}</td>
+  <td>{enquiry?.utm_term || "-"}</td>
+  <td>{enquiry?.utm_content || "-"}</td>
+  <td>
+    <button
+      onClick={() => {
+        dialog({
+          open: true,
+          title: `Delete Enquiry?`,
+          onSubmit: async () => {
+            handleDeleteEnquiry(enquiry?.id);
+          },
+        });
+      }}
+      className="btn btn-error btn-xs"
+    >
+      <BsTrash3 />
+    </button>
+  </td>
+</tr>
 
-                <td>
-                  <button
-                    onClick={() => {
-                      dialog({
-                        open: true,
-                        title: `Delete Enquiry?`,
-                        onSubmit: async () => {
-                          handleDeleteEnquiry(enquiry?.id);
-                        },
-                      });
-                    }}
-                    className="btn btn-error btn-xs"
-                  >
-                    <BsTrash3 />
-                  </button>
-                </td>
-              </tr>
             ))}
           </tbody>
         </table>

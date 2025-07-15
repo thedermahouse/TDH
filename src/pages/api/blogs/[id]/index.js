@@ -4,12 +4,12 @@ import { validateBlogData } from "@/lib/validators/blog";
 export default async function handler(req, res) {
   const { id } = req.query;
 
-  // Validate ID
+  // ✅ Validate blog ID
   if (!id || isNaN(Number(id))) {
     return res.status(400).json({ message: "Invalid blog ID" });
   }
 
-  // Handle GET requests - Get single blog
+  // ✅ GET - Fetch single blog
   if (req.method === "GET") {
     try {
       const blog = await db.Blogs.findUnique({
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // Handle PATCH requests - Update blog
+  // ✅ PATCH - Update blog
   if (req.method === "PATCH") {
     try {
       const {
@@ -44,15 +44,15 @@ export default async function handler(req, res) {
         content,
       } = req.body;
 
-      // Validate input data if present
-      if (title || slug || description || imageURL) {
-        const validation = validateBlogData({
-          title,
-          slug,
-          description,
-          imageURL,
-        });
+      // Prepare data to validate
+      const inputToValidate = {};
+      if (title !== undefined) inputToValidate.title = title;
+      if (slug !== undefined) inputToValidate.slug = slug;
+      if (description !== undefined) inputToValidate.description = description;
+      if (imageURL !== undefined) inputToValidate.imageURL = imageURL;
 
+      if (Object.keys(inputToValidate).length > 0) {
+        const validation = validateBlogData(inputToValidate);
         if (!validation.valid) {
           return res.status(400).json({
             message: "Validation failed",
@@ -61,17 +61,15 @@ export default async function handler(req, res) {
         }
       }
 
-      // Build update data object
+      // Build update payload
       const updateData = {};
       if (title !== undefined) updateData.title = title;
       if (slug !== undefined) updateData.slug = slug;
       if (description !== undefined) updateData.description = description;
       if (imageURL !== undefined) updateData.imageURL = imageURL;
       if (metaTitle !== undefined) updateData.metaTitle = metaTitle;
-      if (metaDescription !== undefined)
-        updateData.metaDescription = metaDescription;
-      if (isPublished !== undefined)
-        updateData.isPublished = Boolean(isPublished);
+      if (metaDescription !== undefined) updateData.metaDescription = metaDescription;
+      if (isPublished !== undefined) updateData.isPublished = Boolean(isPublished);
       if (content !== undefined) updateData.content = content;
 
       // Update blog
@@ -91,7 +89,6 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error(`PATCH /api/blogs/${id} error:`, error);
 
-      // Handle duplicate slug error
       if (error.code === "P2002") {
         return res.status(409).json({
           message: "Blog with this slug already exists",
@@ -99,7 +96,6 @@ export default async function handler(req, res) {
         });
       }
 
-      // Handle not found error
       if (error.code === "P2025") {
         return res.status(404).json({ message: "Blog not found" });
       }
@@ -111,7 +107,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // Handle DELETE requests - Soft delete blog
+  // ✅ DELETE - Soft delete blog
   if (req.method === "DELETE") {
     try {
       await db.Blogs.update({
@@ -129,7 +125,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // Handle other methods
+  // ❌ Unsupported method
   res.setHeader("Allow", ["GET", "PATCH", "DELETE"]);
   return res.status(405).json({ message: "Method not allowed" });
 }

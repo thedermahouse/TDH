@@ -1,8 +1,42 @@
 import db from "@/lib/db";
-import { validateBlogData } from "@/lib/validators/blog";
+
+// Simple validation function
+function validateBlogData(data) {
+  const errors = {};
+
+  // Title: required and must be string
+  if (!data.title || typeof data.title !== "string" || data.title.trim() === "") {
+    errors.title = "Title is required and must be a non-empty string.";
+  }
+
+  // Slug: required and must be string
+  if (!data.slug || typeof data.slug !== "string" || data.slug.trim() === "") {
+    errors.slug = "Slug is required and must be a non-empty string.";
+  }
+
+  // Description: required and must be string
+  if (!data.description || typeof data.description !== "string" || data.description.trim() === "") {
+    errors.description = "Description is required and must be a non-empty string.";
+  }
+
+  // Image URL: optional, but if present must be valid URL or relative path
+  if (data.imageURL && typeof data.imageURL === "string") {
+    if (
+      !/^https?:\/\/.+\..+/.test(data.imageURL) && // absolute URL
+      !/^\/.+/.test(data.imageURL) // OR relative path like /images/...
+    ) {
+      errors.imageURL = "Image URL must be a valid absolute or relative URL.";
+    }
+  }
+
+  return {
+    valid: Object.keys(errors).length === 0,
+    errors,
+  };
+}
 
 export default async function handler(req, res) {
-  // Handle GET requests - List all blogs
+  // ✅ Handle GET - Fetch all blogs
   if (req.method === "GET") {
     try {
       const blogs = await db.Blogs.findMany({
@@ -30,12 +64,12 @@ export default async function handler(req, res) {
     }
   }
 
-  // Handle POST requests - Create new blog
+  // ✅ Handle POST - Create new blog
   if (req.method === "POST") {
     try {
       const { title, slug, description, imageURL, isPublished } = req.body;
 
-      // Validate input data
+      // Validate input
       const validation = validateBlogData({
         title,
         slug,
@@ -44,13 +78,14 @@ export default async function handler(req, res) {
       });
 
       if (!validation.valid) {
+        console.warn("Validation failed:", validation.errors);
         return res.status(400).json({
           message: "Validation failed",
           errors: validation.errors,
         });
       }
 
-      // Create new blog
+      // Save blog
       const newBlog = await db.Blogs.create({
         data: {
           title,
@@ -58,7 +93,7 @@ export default async function handler(req, res) {
           description,
           imageURL: imageURL || null,
           isPublished: Boolean(isPublished),
-          content: [], // Initialize empty content array
+          content: [], // Optional: add if needed
         },
       });
 
@@ -73,7 +108,7 @@ export default async function handler(req, res) {
     } catch (error) {
       console.error("POST /api/blogs error:", error);
 
-      // Handle duplicate slug error
+      // Handle Prisma duplicate slug error
       if (error.code === "P2002") {
         return res.status(409).json({
           message: "Blog with this slug already exists",
@@ -88,7 +123,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // Handle other methods
+  // ❌ Unsupported methods
   res.setHeader("Allow", ["GET", "POST"]);
   return res.status(405).json({ message: "Method not allowed" });
 }

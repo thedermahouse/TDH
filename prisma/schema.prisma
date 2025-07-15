@@ -145,6 +145,11 @@ model ContactUs {
   phone        String
   message      String
   enquiry_from String?
+  utm_source   String?   
+  utm_medium   String?   
+  utm_campaign String?   
+  utm_term     String?   
+  utm_content  String?   
   createdAt    DateTime @default(now())
 }
 

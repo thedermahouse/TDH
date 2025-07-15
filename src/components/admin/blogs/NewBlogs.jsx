@@ -33,7 +33,7 @@ export default function NewBlog({ post }) {
         },
         {
           name: "imageURL",
-          type: "text",
+          type: "",
           label: "Featured Image URL",
           placeholder: "Enter image URL",
           required: false,

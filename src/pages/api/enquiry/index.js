@@ -12,8 +12,20 @@ export default async function handler(req, res) {
     return res.status(200).json(enquiries);
   }
   if (req.method === "PUT") {
-    const { firstName, lastName, email, phone, message, enquiry_from } =
-      req.body;
+    const {
+  firstName,
+  lastName,
+  email,
+  phone,
+  message,
+  enquiry_from,
+  utm_source,
+  utm_medium,
+  utm_campaign,
+  utm_term,
+  utm_content,
+} = req.body;
+
 
     console.log(firstName, lastName, email, phone, message, enquiry_from);
 
@@ -24,13 +36,18 @@ export default async function handler(req, res) {
     try {
       const newContact = await db.ContactUs.create({
         data: {
-          firstName,
-          lastName,
-          email,
-          phone,
-          message,
-          enquiry_from,
-        },
+  firstName,
+  lastName,
+  email,
+  phone,
+  message,
+  enquiry_from,
+  utm_source,
+  utm_medium,
+  utm_campaign,
+  utm_term,
+  utm_content,
+},
       });
 
       return res
