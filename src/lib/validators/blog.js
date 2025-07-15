@@ -2,7 +2,7 @@ export function validateBlogData({ title, slug, description, imageURL }) {
   const errors = {};
   let valid = true;
 
-  // Validate title only if provided
+  // Title validation
   if (title !== undefined) {
     if (title.trim() === "") {
       errors.title = "Title is required";
@@ -13,14 +13,13 @@ export function validateBlogData({ title, slug, description, imageURL }) {
     }
   }
 
-  // Validate slug only if provided
+  // Slug validation
   if (slug !== undefined) {
     if (slug.trim() === "") {
       errors.slug = "Slug is required";
       valid = false;
     } else if (!/^[a-z0-9-]+$/.test(slug)) {
-      errors.slug =
-        "Slug can only contain lowercase letters, numbers, and hyphens";
+      errors.slug = "Slug can only contain lowercase letters, numbers, and hyphens";
       valid = false;
     } else if (slug.length > 100) {
       errors.slug = "Slug must be less than 100 characters";
@@ -28,7 +27,7 @@ export function validateBlogData({ title, slug, description, imageURL }) {
     }
   }
 
-  // Validate description only if provided
+  // Description validation
   if (description !== undefined) {
     if (description.trim() === "") {
       errors.description = "Description is required";
@@ -39,14 +38,10 @@ export function validateBlogData({ title, slug, description, imageURL }) {
     }
   }
 
-  // Validate image URL only if provided
-  if (imageURL !== undefined && imageURL.trim() !== "") {
-    try {
-      new URL(imageURL);
-    } catch (e) {
-      errors.imageURL = "Invalid URL format";
-      valid = false;
-    }
+  // No strict URL validation for imageURL anymore
+  if (imageURL !== undefined && imageURL.trim() === "") {
+    errors.imageURL = "Image field cannot be empty string";
+    valid = false;
   }
 
   return { valid, errors };
