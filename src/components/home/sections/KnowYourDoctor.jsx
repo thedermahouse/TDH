@@ -46,7 +46,7 @@ export default function KnowYourDoctorView({ section }) {
               <div>
                 <div className="mb-3 lg:mb-6">
                   <h2 className="font-hallengerSerif text-3xl md:text-5xl text-dh-p ">
-                    Know Your Doctor
+                  Dr. Manu Singh Walia
                   </h2>
                 </div>
               </div>
