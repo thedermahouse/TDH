@@ -6,7 +6,7 @@ export default function KnowYourDoctor({ section, setSection }) {
     <div>
       <div>
         <div>
-          <span className="uppercase font-bold">Know your doctor</span>
+          <span className="uppercase font-bold">Dr. Manu Singh Walia</span>
         </div>
         <div className="py-2 space-y-3">
           <div className="flex gap-3">
