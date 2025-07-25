@@ -66,7 +66,7 @@ export default async function Page({ params }) {
       <PricingSection ssid={service.id} />
       <Testimonials ssid={service.id} />
       <FAQSection ssid={service.id} />
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center my-8">
         {/* <Button
           href={`/services/${params.serviceName}/sub-service/${subServiceName}/book`}
           className="btn btn-primary"
