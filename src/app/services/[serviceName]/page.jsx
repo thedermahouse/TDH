@@ -7,6 +7,7 @@ import SectionsRender from "@/components/admin/home-editor/SectionsRender";
 import Testimonials from "@/components/home/sections/Testimonials";
 import FAQSection from "./sub-service/[subServiceName]/FAQSection";
 import PricingSection from "./sub-service/[subServiceName]/PricingSection";
+import Link from "next/link";
 
 const serviceDetails = async (name) => {
   return await db.Services.findFirst({
@@ -84,6 +85,25 @@ export default async function Page({ params }) {
       ) : (
         <SubServices service={service} />
       )}
+      <div className="flex justify-center my-8">
+        {/* <Button
+          href={`/services/${params.serviceName}/sub-service/${subServiceName}/book`}
+          className="btn btn-primary"
+        > 
+          Book Now
+        </Button> */}
+        <div>
+          <div>
+            <Link
+              href={`/contact-us?enquiry_from=${service?.name}`}
+              className="dh-sm-btn-w border"
+              aria-label="Enquire Now"
+            >
+              Enquire Now
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }
