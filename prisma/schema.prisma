@@ -36,9 +36,9 @@ model Services {
   servicePageDescription           String?       @db.Text
   servicePageImage1Description     String?       @db.Text
   servicePageSubServiceTitle       String?
+  location                         String?
   servicePageSubServiceDescription String?       @db.Text
   isDeleted                        Boolean       @default(false)
-  location                         String?
   subServices                      SubServices[]
 }
 
