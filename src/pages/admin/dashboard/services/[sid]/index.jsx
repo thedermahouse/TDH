@@ -278,6 +278,13 @@ const EditService = ({ serviceDetails: s, patch }) => {
               required: false,
             },
             {
+              name: "location",
+              type: "text",
+              label: "Location",
+              value: s.location || "",
+              required: false,
+            },
+            {
               name: "faqImageURL",
               type: "text",
               label: "FAQ Image URL",

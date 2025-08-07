@@ -74,10 +74,10 @@ export default function RootLayout({ children }) {
         <PixelTracker /> {/* Add the client-side tracker */}
         <Nav />
         {children}
-        <ConversionTracking />
-        <Footer />
-        <Booking />
-        <Whatsapp />
+        <ConversionTracking/>
+        <Footer/>
+        <Booking/>
+        <Whatsapp/>
       </body>
     </html>
   );
