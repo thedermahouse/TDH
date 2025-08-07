@@ -88,7 +88,7 @@ export default async function Page({ params }) {
       {service?.location && (
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-medium">Clinic Near You</h2>
-          <p className="text-lg w-3/4 text-gray-500">{service?.location}</p>
+          <p className="text-lg w-3/4 text-gray-600">{service?.location}</p>
         </div>
       )}
       <div className="flex justify-center my-8">
