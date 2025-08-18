@@ -3,7 +3,7 @@ import axios from "axios";
 import md5 from "md5";
 
 const check_cache = async (url) => {
-  var cache_data = localStorage.getItem("cache") || "{}";
+  let cache_data = localStorage.getItem("cache") || "{}";
   url = md5(url);
 
   if (cache_data) {
@@ -17,7 +17,7 @@ const check_cache = async (url) => {
 
 const write_cache = async (url, data, expiry) => {
   url = md5(url);
-  var cache_data = localStorage.getItem("cache") || "{}";
+  let cache_data = localStorage.getItem("cache") || "{}";
 
   cache_data = JSON.parse(cache_data);
 
@@ -27,12 +27,18 @@ const write_cache = async (url, data, expiry) => {
   );
 };
 
-const get_data = async (url, cache) => {
+const clear_cache = (url) => {
+  let cache_data = JSON.parse(localStorage.getItem("cache") || "{}");
+  delete cache_data[md5(url)];
+  localStorage.setItem("cache", JSON.stringify(cache_data));
+};
+
+const get_data = async (url, cache, cacheTime) => {
   if (!url) {
     throw new Error("Invalid URL");
   }
   if (cache) {
-    var { data, expiry } = await check_cache(url);
+    const { data, expiry } = await check_cache(url);
     if (data && expiry) {
       if (Date.now() < expiry) {
         return { data };
@@ -43,7 +49,7 @@ const get_data = async (url, cache) => {
     withCredentials: true,
   });
   if (cache) {
-    write_cache(url, fetched_data, Date.now() + 1000 * 60 * 1);
+    write_cache(url, fetched_data, Date.now() + cacheTime);
   }
   return { data: fetched_data };
 };
@@ -54,7 +60,7 @@ export const useQuery = (url, options = {}) => {
   const [loading, setIsLoading] = useState(false);
   const [actionResponse, setActionResponse] = useState(null);
 
-  const { cache, enabled = true } = options;
+  const { cache, enabled = true, cacheTime = 1000 * 60 * 1 } = options; // default 1 min
 
   const isLoading = loading || (data === null && error === null);
 
@@ -66,7 +72,7 @@ export const useQuery = (url, options = {}) => {
     }
     try {
       setIsLoading(true);
-      const { data } = await get_data(url, !!cache);
+      const { data } = await get_data(url, !!cache, cacheTime);
       setData(data);
       setError(null);
     } catch (e) {
@@ -79,7 +85,7 @@ export const useQuery = (url, options = {}) => {
     } finally {
       setIsLoading(false);
     }
-  }, [url, cache, enabled]);
+  }, [url, cache, enabled, cacheTime]);
 
   const modifyRequest = useCallback(
     async (url, method, data) => {
@@ -96,7 +102,11 @@ export const useQuery = (url, options = {}) => {
           }
         );
         setActionResponse(res);
-        query();
+
+        // Clear cache so refetch gets fresh data
+        clear_cache(url);
+
+        await query();
         return res;
       } catch (e) {
         const err = {

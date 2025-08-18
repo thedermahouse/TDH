@@ -108,6 +108,38 @@ model Blogs {
   sections            Json?              @default("[]")
 }
 
+model LandingPage {
+  id              Int      @id @default(autoincrement())
+  title           String
+  slug            String   @unique
+  description     String?
+  bannerUrl       String?
+  sections        Json?    // array of section objects
+  metaTitle       String?
+  metaDescription String?
+  isPublished     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model LandingTestimonial {
+  id             Int      @id @default(autoincrement())
+  content        String
+  author         String
+  image          String?
+  date           String?
+  priority       Int?
+  landingPageId  Int?
+}
+
+model LandingPageFAQ {
+  id        Int      @id @default(autoincrement())
+  question  String   @db.Text
+  answer    String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum PlanIcon {
   LEAF
   CROWN
@@ -153,6 +185,18 @@ model ContactUs {
   utm_content  String?   
   createdAt    DateTime @default(now())
 }
+
+model Lead {
+  id          Int      @id @default(autoincrement())
+  fullName    String
+  mobile      String
+  email       String
+  location    String
+  message     String?
+  landingPage String
+  createdAt   DateTime @default(now())
+}
+
 
 model Pages {
   id          Int      @id @default(autoincrement())

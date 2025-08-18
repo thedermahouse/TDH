@@ -33,6 +33,12 @@ import LogoEditor from "./editors/LogoEditor";
 import LogosView from "@/components/home/sections/LogosView";
 import AboutUsHeaderEditor from "./editors/AboutUsHeaderEditor";
 import AboutUsHeaderView from "@/components/home/sections/AboutUsHeaderView";
+import ServiceShowcaseEditor from "./editors/ServiceShowcaseEditor";
+import ServiceShowcase from "@/components/home/sections/ServiceShowcase";
+import LandingTestimonialsBannerEditor from "./editors/LandingTestimonialsBannerEditor";
+import LandingTestimonialsBanner from "@/components/home/sections/LandingTestimonialsBanner";
+import BeforeAfterProgressionEditor from "./editors/BeforeAfterProgressionEditor";
+import BeforeAfterProgression from "@/components/home/sections/BeforeAfterProgression";
 
 const UnknownSection = () => <div>Unknown Section</div>;
 
@@ -42,9 +48,18 @@ const homeSectionTypes = {
   "about-us": { admin: AboutUs, home: AboutUsView },
   "image-banner": { admin: ImageBanner, home: ImageBannerView },
   "service-display": { admin: ServiceDisplay, home: ServiceDisplayView },
+  services2: { admin: ServiceShowcaseEditor, home: ServiceShowcase },
   testimonials: { admin: Testimonials, home: TestimonialsView },
+  "landing-testimonials": {
+    admin: LandingTestimonialsBannerEditor,
+    home: LandingTestimonialsBanner,
+  },
   video: <></>,
   "follow-us": { admin: InstagramBanners, home: InstagramBannersView },
+  "before-after-progression": {
+    admin: BeforeAfterProgressionEditor,
+    home: BeforeAfterProgression,
+  },
   "content-section": {
     admin: ContentSectionEditor,
     home: ContentSectionView,

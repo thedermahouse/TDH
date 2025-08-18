@@ -113,9 +113,10 @@ function Modal(props) {
                                 className={`select select-bordered ${props.inputStyle}`}
                                 value={formData[name] || ""}
                                 onChange={(e) => {
-                                  setFormData((curr) => {
-                                    return { ...curr, [name]: e.target.value };
-                                  });
+                                  setFormData((curr) => ({
+                                    ...curr,
+                                    [name]: e.target.value,
+                                  }));
                                 }}
                                 multiple={multiple}
                                 required={!optional}
@@ -123,11 +124,19 @@ function Modal(props) {
                                 <option disabled value="">
                                   Select
                                 </option>
-                                {(options || []).map(({ val, option }) => (
-                                  <option key={`option-${val}`} value={val}>
-                                    {option}
-                                  </option>
-                                ))}
+                                {(options || []).map((opt, idx) => {
+                                  const val = opt.val ?? opt.value ?? "";
+                                  const labelText =
+                                    opt.option ?? opt.label ?? "";
+                                  return (
+                                    <option
+                                      key={`option-${val || idx}`}
+                                      value={val}
+                                    >
+                                      {labelText}
+                                    </option>
+                                  );
+                                })}
                               </select>
                             </div>
                           );

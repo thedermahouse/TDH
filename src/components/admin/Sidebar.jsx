@@ -14,7 +14,7 @@ import { RiBloggerLine } from "react-icons/ri";
 
 export default function Sidebar({}) {
   const router = useRouter();
-  return (
+  return ( 
     <div className="h-full">
       <div className="bg-accent h-full flex flex-col bg-gray-900">
         <div className="aspect-square flex items-center justify-center bg-base-200 text-white font-black">
@@ -45,6 +45,11 @@ export default function Sidebar({}) {
             {
               name: "Blogs",
               href: "/admin/dashboard/blogs",
+              icon: <RiBloggerLine />,
+            },
+            {
+              name: "Landing Pages",
+              href: "/admin/dashboard/landing-pages",
               icon: <RiBloggerLine />,
             },
             {
