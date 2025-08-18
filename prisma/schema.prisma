@@ -112,7 +112,7 @@ model LandingPage {
   id              Int      @id @default(autoincrement())
   title           String
   slug            String   @unique
-  description     String?
+  description     String?  @default("")
   bannerUrl       String?
   sections        Json?    // array of section objects
   metaTitle       String?
