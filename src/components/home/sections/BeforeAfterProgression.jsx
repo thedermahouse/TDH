@@ -8,7 +8,7 @@ export default function BeforeAfterProgression({ section }) {
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4 text-center">
         {/* Heading */}
-        <h2 className="text-3xl lg:text-4xl font-normal mb-4">{heading}</h2>
+        <h2 className="text-3xl lg:text-4xl font-primary font-normal mb-4">{heading}</h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-10">{description}</p>
 
         {/* Progression Items */}
@@ -17,12 +17,12 @@ export default function BeforeAfterProgression({ section }) {
             <div key={idx} className="flex flex-col items-center">
               {/* Image */}
               {item.imageURL && (
-                <div className="w-full h-64 relative">
+                <div className="w-full  aspect-[4/3] relative">
                   <Image
                     src={item.imageURL}
                     alt={item.title || `Step ${idx + 1}`}
                     fill
-                    className="object-cover rounded-lg shadow-lg"
+                    className="object-cover  rounded-lg shadow-lg"
                   />
                 </div>
               )}

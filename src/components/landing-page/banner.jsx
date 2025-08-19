@@ -11,12 +11,16 @@ const Banner = ({ title, subtitle, backgroundImage, landingPage }) => {
   return (
     <section
       style={bannerStyle}
-      className="sm:min-h-[100vh] min-h-[100vsh]  relative sm:flex items-center justify-center p-8 text-white "
+      className="sm:min-h-[100vh] min-h-[100vsh]  relative sm:flex items-center sm:justify-start p-8 text-white "
     >
       {/* Content */}
       <div className=" z-10 max-w-2xl text-center sm:text-left">
-        <h1 className="text-4xl md:text-5xl text-black font-normal">{title}</h1>
-        {subtitle && <p className="mt-4 text-lg md:text-xl">{subtitle}</p>}
+        <h1 className="text-4xl md:text-5xl text-white font-primary font-normal">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="mt-4 text-lg font-primary md:text-xl">{subtitle}</p>
+        )}
 
         {/* Lead Form */}
       </div>

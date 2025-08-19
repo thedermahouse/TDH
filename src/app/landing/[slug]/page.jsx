@@ -45,7 +45,7 @@ export default async function Page({ params }) {
         </div>
         <LandingTestimonialsBannerView landingPageId={page.id} />
         <FAQSection />
-        <Footer2 />
+        {/* <Footer2 /> */}
       </section>
     </main>
   );
