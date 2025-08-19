@@ -13,14 +13,33 @@ export default async function handler(req, res) {
     }
 
     if (req.method === "PUT" || req.method === "PATCH") {
-      const data = { ...req.body };
-      if (data.slug) data.slug = slugify(data.slug);
-      if (data.title && !data.slug) data.slug = slugify(data.title);
-      const updated = await db.landingPage.update({
-        where: { id: Number(id) },
-        data,
-      });
-      return res.json(updated);
+      try {
+        const data = { ...req.body };
+
+        // Map frontend -> schema fields
+        if ("published" in data) {
+          data.isPublished = data.published;
+          delete data.published;
+        }
+
+        // Remove unsupported fields
+        delete data.ctaText;
+        delete data.ctaLink;
+
+        // Handle slug
+        if (data.slug) data.slug = slugify(data.slug);
+        if (data.title && !data.slug) data.slug = slugify(data.title);
+
+        const updated = await db.landingPage.update({
+          where: { id: Number(id) },
+          data,
+        });
+
+        return res.json(updated);
+      } catch (err) {
+        console.error("LandingPage Update Error:", err);
+        return res.status(500).json({ error: err.message });
+      }
     }
 
     if (req.method === "DELETE") {

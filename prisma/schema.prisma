@@ -95,7 +95,7 @@ model Blogs {
   id                  Int      @id @default(autoincrement())
   title               String
   slug                String   @unique
-  description         String?
+  description         String?  
   content             Json?    // Store rich content or sections
   metaTitle           String?
   metaDescription     String?
@@ -112,10 +112,10 @@ model LandingPage {
   id              Int      @id @default(autoincrement())
   title           String
   slug            String   @unique
-  description     String?  @default("")
+  description     String?  @db.Text
   bannerUrl       String?
   sections        Json?    // array of section objects
-  metaTitle       String?
+  metaTitle       String?   
   metaDescription String?
   isPublished     Boolean  @default(true)
   createdAt       DateTime @default(now())

@@ -25,19 +25,23 @@ export default async function handler(req, res) {
       try {
         const {
           title,
-          description,
-          bannerUrl,
-          metaTitle,
-          metaDescription,
+          description = "",
+          bannerUrl = "",
+          metaTitle = "",
+          metaDescription = "",
           slug,
         } = req.body;
+
+        if (!title) {
+          return res.status(400).json({ error: "Title is required" });
+        }
 
         const finalSlug = slug ? slugify(slug) : slugify(title);
 
         const created = await db.landingPage.create({
           data: {
             title,
-            description,
+            description: description ?? "", // ✅ ensures not undefined
             bannerUrl,
             metaTitle,
             metaDescription,
@@ -47,7 +51,7 @@ export default async function handler(req, res) {
 
         return res.status(201).json(created);
       } catch (err) {
-        console.error("Landing Page Create Error:", err); // 👈 will show Prisma error
+        console.error("Landing Page Create Error:", err);
         return res.status(500).json({ error: err.message });
       }
     }
