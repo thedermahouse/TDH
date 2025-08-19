@@ -16,40 +16,50 @@ export default function LeadForm({ landingPage = "default" }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- const handleSubmit = async (event) => {
-  event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  try {
-    const res = await fetch("/api/leads", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...formData, landingPage }),
-    });
-
-    if (res.ok) {
-      alert("Lead submitted successfully!");
-      setFormData({
-        fullName: "",
-        mobile: "",
-        email: "",
-        location: "",
-        message: "",
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, landingPage }),
       });
-    } else {
-      const error = await res.json();
-      alert(error.message || "Failed to submit lead");
+
+      if (res.ok) {
+        alert("Lead submitted successfully!");
+        setFormData({
+          fullName: "",
+          mobile: "",
+          email: "",
+          location: "",
+          message: "",
+        });
+      } else {
+        const error = await res.json();
+        alert(error.message || "Failed to submit lead");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong!");
     }
-  } catch (err) {
-    console.error(err);
-    alert("Something went wrong!");
-  }
-};
+  };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#ebd3c7] text-black rounded-md shadow-lg p-4 space-y-4 max-w-md mx-auto"
+      className="bg-[#ebd3c7] text-black rounded-md shadow-lg p-6 space-y-4 max-w-md mx-auto"
     >
+      {/* 🔹 Title + subtitle */}
+      <div className="text-left mb-4">
+        <h2 className="text-xl font-bold font-primary text-gray-900">
+          Get in Touch
+        </h2>
+        <p className="text-sm text-gray-700">
+          Fill out the form and we’ll reach out to you shortly.
+        </p>
+      </div>
+
       <input type="hidden" name="landingPage" value={landingPage} />
 
       <input
