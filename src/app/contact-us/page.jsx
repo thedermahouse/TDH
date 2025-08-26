@@ -10,10 +10,10 @@ export const generateMetadata = async () => {
   return {
     title:
       seo?.metaTitle ||
-      "Book Your Dermatology Consultation Today | The Derma House",
+      "Dermatology consultation in Santacruz | Dr. Manu S. Walia",
     description:
       seo?.metaDescription ||
-      "Reach out to The Derma House for expert dermatology consultation. Connect with Dr Manu S. Walia for personalized skin, hair & aesthetic care appointments",
+      "Dermatology consultation in Santacruz by Dr. Manu S. Walia for expert guidance, diagnosis, and treatment plans for skin and hair concerns.",
     images: [seo?.metaImage],
     alternates: {
       canonical: "https://thedermahouse.com/contact-us",

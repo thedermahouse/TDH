@@ -7,8 +7,8 @@ export const generateMetadata = async () => {
   const { content } = await getPart("ABOUT_US");
   const { seo } = content;
   return {
-    title: seo?.metaTitle || "The Derma House",
-    description: seo?.metaDescription || "Complete dermal solutions",
+    title: seo?.metaTitle || "Dermatology specialist in Santacruz | Dr. Manu S. Walia",
+    description: seo?.metaDescription || "Dermatology specialist in Santacruz Dr. Manu S. Walia offering advanced skin, hair, and aesthetic treatments with personalized patient care.",
     images: [seo?.metaImage],
     alternates: {
       canonical: "https://thedermahouse.com/about-us",
