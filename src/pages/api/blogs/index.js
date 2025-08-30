@@ -28,6 +28,14 @@ function validateBlogData(data) {
       errors.imageURL = "Image URL must be a valid absolute or relative URL.";
     }
   }
+ // Tags validation
+ if (data.tags !== undefined) {
+   if (!Array.isArray(data.tags)) {
+     errors.tags = "Tags must be an array of strings.";
+   } else if (data.tags.some((t) => typeof t !== "string" || t.trim() === "")) {
+     errors.tags = "Each tag must be a non-empty string.";
+   }
+ }
 
   return {
     valid: Object.keys(errors).length === 0,
@@ -51,6 +59,7 @@ export default async function handler(req, res) {
           isPublished: true,
           createdAt: true,
           updatedAt: true,
+          tags: true,
         },
       });
 
@@ -94,6 +103,7 @@ export default async function handler(req, res) {
           imageURL: imageURL || null,
           isPublished: Boolean(isPublished),
           content: [], // Optional: add if needed
+          tags: true,
         },
       });
 

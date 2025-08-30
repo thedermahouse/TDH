@@ -52,6 +52,13 @@ const EditBlog = ({ blogDetails, patch }) => {
               required: false,
             },
             {
+              name: "tags",
+              type: "text",
+              label: "Tags (comma separated)",
+              value: (blogDetails.tags || []).join(", "),
+              required: false,
+            },
+            {
               name: "imageURL",
               type: "text",
               label: "Blog Image URL",
@@ -74,7 +81,15 @@ const EditBlog = ({ blogDetails, patch }) => {
             },
           ],
           onSubmit: async (data) => {
-            await patch(data);
+            await patch({
+              ...data,
+              tags: data.tags
+                ? data.tags
+                    .split(",")
+                    .map((t) => t.trim())
+                    .filter(Boolean)
+                : [],
+            });
           },
         });
       }}

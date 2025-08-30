@@ -39,6 +39,13 @@ export default function NewBlog({ post }) {
           required: false,
         },
         {
+          name: "tags",
+          type: "text",
+          label: "Tags (comma separated)",
+          placeholder: "e.g. skincare, wellness, acne",
+          required: false,
+        },
+        {
           name: "isPublished",
           type: "checkbox",
           label: "Publish Immediately",
@@ -52,6 +59,12 @@ export default function NewBlog({ post }) {
           const blogData = {
             ...formData,
             content: [],
+            tags: formData.tags
+              ? formData.tags
+                  .split(",")
+                  .map((t) => t.trim())
+                  .filter(Boolean)
+              : [],
           };
           await post(blogData);
         } catch (error) {
