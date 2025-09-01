@@ -7,12 +7,30 @@ export default function BlogsList({ blogs }) {
   const searchParams = useSearchParams();
   const selectedTag = searchParams.get("tag") || null;
 
+  const normalizeTags = (tags) => {
+    if (!tags) return [];
+    if (Array.isArray(tags)) return tags;
+    if (typeof tags === "string") {
+      try {
+        // If it's a JSON string like '["a","b"]'
+        if (tags.trim().startsWith("[")) {
+          return JSON.parse(tags);
+        }
+        // If it's comma-separated like "a, b"
+        return tags.split(",").map((t) => t.trim());
+      } catch {
+        return [tags]; // fallback
+      }
+    }
+    return [];
+  };
+
   const filteredBlogs = selectedTag
-    ? blogs.filter((b) => b.tags?.includes(selectedTag))
+    ? blogs.filter((b) => normalizeTags(b.tags).includes(selectedTag))
     : blogs;
 
   const allTags = Array.from(
-    new Set(blogs.flatMap((b) => b.tags || []))
+    new Set(blogs.flatMap((b) => normalizeTags(b.tags)))
   ).sort();
 
   function truncate(str, n) {
