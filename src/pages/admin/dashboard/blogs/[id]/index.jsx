@@ -10,6 +10,26 @@ import { TbExternalLink } from "react-icons/tb";
 const EditBlog = ({ blogDetails, patch }) => {
   const dialog = useDialogProvider();
 
+  // 🔑 Normalize tags to always be an array
+  let normalizedTags = [];
+  try {
+    if (Array.isArray(blogDetails.tags)) {
+      normalizedTags = blogDetails.tags;
+    } else if (typeof blogDetails.tags === "string") {
+      // if stored as "tag1, tag2"
+      if (blogDetails.tags.trim().startsWith("["))
+        normalizedTags = JSON.parse(blogDetails.tags); // JSON string
+      else
+        normalizedTags = blogDetails.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+    }
+  } catch (err) {
+    console.error("Error normalizing tags:", err);
+    normalizedTags = [];
+  }
+
   return (
     <button
       onClick={() => {
@@ -55,7 +75,7 @@ const EditBlog = ({ blogDetails, patch }) => {
               name: "tags",
               type: "text",
               label: "Tags (comma separated)",
-              value: (blogDetails.tags || []).join(", "),
+              value: normalizedTags.join(", "), // ✅ safe now
               required: false,
             },
             {
