@@ -1,22 +1,22 @@
 import db from "@/lib/db";
 
 export default async function handler(req, res) {
-  const { id } = req.query; // landingPageId from route
+  const { id } = req.query;
 
   if (req.method === "GET") {
-    const faqs = await db.LandingPageFAQ.findMany({
-      where: { landingPageId: +id }, // filter by landing page
+    const faqs = await db.landingPageFAQ.findMany({
+      where: { landingPageId: Number(id) }, // ✅ only this landing
     });
     return res.status(200).json(faqs);
   }
 
   if (req.method === "PUT") {
     const { question, answer } = req.body;
-    await db.LandingPageFAQ.create({
+    await db.landingPageFAQ.create({
       data: {
         question,
         answer,
-        landingPageId: +id, // attach to this landing page
+        landingPageId: Number(id), // ✅ link to landing page
       },
     });
     return res.status(200).json({ message: "FAQ created" });

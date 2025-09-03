@@ -54,7 +54,7 @@ export default function LandingPageDetails() {
               aria-label="FAQs"
             />
             <div role="tabpanel" className="tab-content py-10">
-             <LandingFAQEditor lid={id} />
+            <LandingFAQEditor lid={data?.id} />
             </div>
           </div>
         </AdminPanelWrapper>

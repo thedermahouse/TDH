@@ -40,7 +40,12 @@ const FAQItem = ({ faq, refetch, lid }) => {
 };
 
 export default function LandingFAQEditor({ lid }) {
+  if (!lid) {
+    return <div className="text-red-500">⚠ No landing page selected</div>;
+  }
+
   const { data, put, refetch } = useQuery(`/api/landing-pages/${lid}/faqs`);
+
   const dialog = useDialogProvider();
 
   return (

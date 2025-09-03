@@ -44,7 +44,8 @@ export default async function Page({ params }) {
           <SectionsRender sections={page.sections || []} />
         </div>
         <LandingTestimonialsBannerView landingPageId={page.id} />
-        <FAQSection />
+       <FAQSection landingPageId={page.id} />
+
         {/* <Footer2 /> */}
       </section>
     </main>

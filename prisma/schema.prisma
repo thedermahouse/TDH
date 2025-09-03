@@ -111,32 +111,21 @@ model Blogs {
 
 
 model LandingPage {
-  id              Int                 @id @default(autoincrement())
+  id              Int                @id @default(autoincrement())
   title           String
-  slug            String              @unique
-  description     String?             @db.Text
+  slug            String             @unique
+  description     String?            @db.Text
   bannerUrl       String?
-  sections        Json?               // array of section objects
+  sections        Json?
   metaTitle       String?
   metaDescription String?
-  isPublished     Boolean             @default(true)
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
+  isPublished     Boolean            @default(true)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 
-  faqs            LandingPageFAQ[]    // 👈 relation
-  testimonials    LandingTestimonial[] // 👈 relation if you want to link testimonials too
-}
-
-model LandingTestimonial {
-  id             Int      @id @default(autoincrement())
-  content        String   @db.Text
-  author         String
-  image          String?
-  date           String?
-  priority       Int?
-
-  landingPageId  Int?
-  landingPage    LandingPage? @relation(fields: [landingPageId], references: [id]) // 👈 add relation
+  // Back-relations (optional but useful)
+  faqs            LandingPageFAQ[]
+  testimonials    LandingTestimonial[]
 }
 
 model LandingPageFAQ {
@@ -146,9 +135,25 @@ model LandingPageFAQ {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
 
-  landingPageId Int?        // 👈 foreign key
-  landingPage   LandingPage?  @relation(fields: [landingPageId], references: [id]) // 👈 relation
+  landingPageId Int          // ✅ required
+  landingPage   LandingPage  @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
 }
+
+
+model LandingTestimonial {
+  id            Int         @id @default(autoincrement())
+  content       String      @db.Text
+  author        String
+  image         String?
+  date          String?
+  priority      Int?        @default(0)
+
+  landingPageId Int
+  landingPage   LandingPage @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
+
+  @@index([landingPageId, priority])
+}
+
 
 
 enum PlanIcon {
