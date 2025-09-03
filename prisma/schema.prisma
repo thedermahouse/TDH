@@ -111,17 +111,20 @@ model Blogs {
 
 
 model LandingPage {
-  id              Int      @id @default(autoincrement())
+  id              Int                 @id @default(autoincrement())
   title           String
-  slug            String   @unique
-  description     String?  @db.Text
+  slug            String              @unique
+  description     String?             @db.Text
   bannerUrl       String?
-  sections        Json?    // array of section objects
-  metaTitle       String?   
+  sections        Json?               // array of section objects
+  metaTitle       String?
   metaDescription String?
-  isPublished     Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  isPublished     Boolean             @default(true)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  faqs            LandingPageFAQ[]    // 👈 relation
+  testimonials    LandingTestimonial[] // 👈 relation if you want to link testimonials too
 }
 
 model LandingTestimonial {
@@ -131,16 +134,22 @@ model LandingTestimonial {
   image          String?
   date           String?
   priority       Int?
+
   landingPageId  Int?
+  landingPage    LandingPage? @relation(fields: [landingPageId], references: [id]) // 👈 add relation
 }
 
 model LandingPageFAQ {
-  id        Int      @id @default(autoincrement())
-  question  String   @db.Text
-  answer    String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            Int          @id @default(autoincrement())
+  question      String       @db.Text
+  answer        String       @db.Text
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  landingPageId Int?        // 👈 foreign key
+  landingPage   LandingPage?  @relation(fields: [landingPageId], references: [id]) // 👈 relation
 }
+
 
 enum PlanIcon {
   LEAF
