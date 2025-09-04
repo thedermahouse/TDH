@@ -148,8 +148,8 @@ model LandingTestimonial {
   date          String?
   priority      Int?        @default(0)
 
-  landingPageId Int
-  landingPage   LandingPage @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
+  landingPageId Int?
+  landingPage   LandingPage? @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
 
   @@index([landingPageId, priority])
 }
@@ -203,14 +203,14 @@ model ContactUs {
 }
 
 model Lead {
-  id          Int      @id @default(autoincrement())
-  fullName    String
-  mobile      String
-  email       String
-  location    String
-  message     String?
-  landingPage String
-  createdAt   DateTime @default(now())
+  id             Int      @id @default(autoincrement())
+  fullName       String
+  mobile         String
+  location       String
+  message        String?
+  landingPage    String
+  appointmentDate DateTime
+  createdAt      DateTime @default(now())
 }
 
 

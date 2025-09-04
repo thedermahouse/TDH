@@ -17,6 +17,7 @@
     "axios": "^1.9.0",
     "daisyui": "^5.0.28",
     "framer-motion": "^12.23.12",
+    "google-reviews-widget": "^1.0.4",
     "jodit-react": "^5.2.19",
     "lucide-react": "^0.542.0",
     "md5": "^2.3.0",

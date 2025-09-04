@@ -6,6 +6,9 @@ import LandingTestimonialsBanner from "@/components/home/sections/LandingTestimo
 import LandingTestimonialsBannerView from "@/components/home/sections/LandingTestimonialsBannerView";
 import FAQSection from "@/components/home/sections/FAQSection";
 import Footer2 from "@/components/home/sections/Footer2";
+import GoogleReview from "@/components/landing-page/google-review";
+import { Contact } from "lucide-react";
+import ContactSection from "@/components/landing-page/contact-section";
 
 const getLanding = async (slug) => {
   return await db.landingPage.findUnique({
@@ -44,8 +47,9 @@ export default async function Page({ params }) {
           <SectionsRender sections={page.sections || []} />
         </div>
         <LandingTestimonialsBannerView landingPageId={page.id} />
-       <FAQSection landingPageId={page.id} />
-
+        <GoogleReview />
+        <FAQSection landingPageId={page.id} />
+        <ContactSection />
         {/* <Footer2 /> */}
       </section>
     </main>

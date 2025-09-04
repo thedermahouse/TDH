@@ -17,8 +17,8 @@ export default function LeadsTable({ data, del }) {
             <th>#</th>
             <th>Full Name</th>
             <th>Mobile</th>
-            <th>Email</th>
             <th>Location</th>
+            <th>Date</th>
             <th>Message</th>
             <th>Landing Page</th>
             <th>Action</th>
@@ -30,26 +30,13 @@ export default function LeadsTable({ data, del }) {
               <td>{index + 1}</td>
               <td>{lead.fullName}</td>
               <td>{lead.mobile}</td>
-              <td>{lead.email}</td>
               <td>{lead.location}</td>
+              <td>{new Date(lead.date).toLocaleDateString()}</td>
               <td>{lead.message || "-"}</td>
               <td>
                 <span className="badge badge-primary">{lead.landingPage}</span>
               </td>
-              <td>
-                <button
-                  onClick={() =>
-                    dialog({
-                      open: true,
-                      title: "Delete Lead?",
-                      onSubmit: () => handleDelete(lead.id),
-                    })
-                  }
-                  className="btn btn-error btn-xs"
-                >
-                  <BsTrash3 />
-                </button>
-              </td>
+              <td>...</td>
             </tr>
           ))}
         </tbody>
