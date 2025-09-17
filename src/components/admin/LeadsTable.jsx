@@ -16,10 +16,12 @@ export default function LeadsTable({ data, del }) {
           <tr>
             <th>#</th>
             <th>Full Name</th>
-            <th>Mobile</th>
-            <th>Location</th>
-            <th>Date</th>
-            <th>Message</th>
+            <th>Phone</th>
+            <th>Postcode</th>
+            <th>Treatment Interest</th>
+            <th>Start Plan</th>
+            <th>Callback Time</th>
+            <th>Doctor Note</th>
             <th>Landing Page</th>
             <th>Action</th>
           </tr>
@@ -29,10 +31,12 @@ export default function LeadsTable({ data, del }) {
             <tr key={lead.id}>
               <td>{index + 1}</td>
               <td>{lead.fullName}</td>
-              <td>{lead.mobile}</td>
-              <td>{lead.location}</td>
-              <td>{new Date(lead.date).toLocaleDateString()}</td>
-              <td>{lead.message || "-"}</td>
+              <td>{lead.phone}</td>
+              <td>{lead.postcode}</td>
+              <td>{lead.treatmentInterest}</td>
+              <td>{lead.startPlan}</td>
+              <td>{lead.callbackTime}</td>
+              <td>{lead.doctorNote || "-"}</td>
               <td>
                 <span className="badge badge-primary">{lead.landingPage}</span>
               </td>

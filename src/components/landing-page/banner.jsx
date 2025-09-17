@@ -24,7 +24,7 @@ const Banner = ({ title, subtitle, backgroundImage, landingPage }) => {
 
         {/* Lead Form */}
       </div>
-      <div className="sm:absolute top-28 sm:right-20  mt-[140px]">
+      <div className="sm:absolute top-20 sm:right-20  mt-[140px]">
         <LeadForm landingPage={landingPage} />
       </div>
     </section>

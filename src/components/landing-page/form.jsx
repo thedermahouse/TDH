@@ -4,10 +4,12 @@ import React, { useState } from "react";
 export default function LeadForm({ landingPage = "default" }) {
   const [formData, setFormData] = useState({
     fullName: "",
-    mobile: "",
-    location: "",
-    message: "",
-    date: "",
+    phone: "",
+    postcode: "",
+    treatmentInterest: "",
+    startPlan: "",
+    callbackTime: "",
+    doctorNote: "",
   });
 
   const handleChange = (e) => {
@@ -24,7 +26,6 @@ export default function LeadForm({ landingPage = "default" }) {
         body: JSON.stringify({
           ...formData,
           landingPage,
-          appointmentDate: formData.date, // map correctly
         }),
       });
 
@@ -32,10 +33,12 @@ export default function LeadForm({ landingPage = "default" }) {
         alert("Lead submitted successfully!");
         setFormData({
           fullName: "",
-          mobile: "",
-          location: "",
-          message: "",
-          date: "",
+          phone: "",
+          postcode: "",
+          treatmentInterest: "",
+          startPlan: "",
+          callbackTime: "",
+          doctorNote: "",
         });
       } else {
         const error = await res.json();
@@ -46,6 +49,9 @@ export default function LeadForm({ landingPage = "default" }) {
       alert("Something went wrong!");
     }
   };
+
+  const fieldClasses =
+    "w-full px-4 py-2 border rounded-md bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm transition";
 
   return (
     <form
@@ -67,47 +73,79 @@ export default function LeadForm({ landingPage = "default" }) {
         placeholder="Full Name"
         value={formData.fullName}
         onChange={handleChange}
+        className={fieldClasses}
         required
-        className="w-full px-4 py-2 border rounded-sm bg-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
       />
+
       <input
         type="tel"
-        name="mobile"
-        placeholder="Mobile Number"
-        value={formData.mobile}
+        name="phone"
+        placeholder="Phone Number"
+        value={formData.phone}
         onChange={handleChange}
+        className={fieldClasses}
         required
-        className="w-full px-4 py-2 border rounded-sm bg-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
       />
+
       <input
         type="text"
-        name="location"
-        placeholder="Location"
-        value={formData.location}
+        name="postcode"
+        placeholder="Postcode"
+        value={formData.postcode}
         onChange={handleChange}
+        className={fieldClasses}
         required
-        className="w-full px-4 py-2 border rounded-sm bg-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
       />
+
       <input
-        type="date"
-        name="date"
-        value={formData.date}
+        type="text"
+        name="treatmentInterest"
+        placeholder="Which Skin & Hair treatment are you interested in?"
+        value={formData.treatmentInterest}
         onChange={handleChange}
+        className={fieldClasses}
         required
-        className="w-full px-4 py-2 border rounded-sm bg-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
       />
+
+      <select
+        name="startPlan"
+        value={formData.startPlan}
+        onChange={handleChange}
+        className={fieldClasses}
+        required
+      >
+        <option value="">When do you plan to get started?</option>
+        <option value="Immediately">Immediately</option>
+        <option value="Within 1 Week">Within 1 Week</option>
+        <option value="Within 1 Month">Within 1 Month</option>
+        <option value="Just Exploring">Just Exploring</option>
+      </select>
+
+      <select
+        name="callbackTime"
+        value={formData.callbackTime}
+        onChange={handleChange}
+        className={fieldClasses}
+        required
+      >
+        <option value="">Preferred time for a callback</option>
+        <option value="11AM – 1 PM">11AM – 1 PM</option>
+        <option value="1 PM – 4 PM">1 PM – 4 PM</option>
+        <option value="4 PM – 8 PM">4 PM – 8 PM</option>
+      </select>
+
       <textarea
-        name="message"
-        placeholder="Message"
-        value={formData.message}
+        name="doctorNote"
+        placeholder="Anything you’d like the doctor to know?"
+        value={formData.doctorNote}
         onChange={handleChange}
         rows={3}
-        className="w-full px-4 py-2 border rounded-sm bg-white border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"
+        className={fieldClasses}
       />
 
       <button
         type="submit"
-        className="w-full py-3 bg-[#F8F8F8] text-[#000] rounded-sm hover:bg-[#9D9896]/80 transition"
+        className="w-full py-3 bg-[#F8F8F8] text-[#000] font-medium rounded-md hover:bg-[#9D9896]/80 transition"
       >
         Submit
       </button>
