@@ -91,6 +91,8 @@ export default function ContactForm({ enquiry_from }) {
           enquiry_from: "",
         });
         setTimeout(() => setSuccessMessage(""), 3000);
+        window.location.href = "/thank-you";
+        return;
       }
     } catch (error) {
       setErrorMessage("Failed to send message. Please try again.");
