@@ -130,7 +130,7 @@ export default async function BlogPost({ params }) {
                     Trending post
                   </label>
                   <ul>
-                    {shuffledBlogs.map((b) => (
+                    {shuffledBlogs.slice(0, 6).map((b) => (
                       <li
                         className="border-b-1 border-[#909009] p-2"
                         key={b.slug}

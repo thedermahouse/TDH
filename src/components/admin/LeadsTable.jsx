@@ -23,6 +23,7 @@ export default function LeadsTable({ data, del }) {
             <th>Callback Time</th>
             <th>Doctor Note</th>
             <th>Landing Page</th>
+            <th>Date Submitted</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -40,7 +41,20 @@ export default function LeadsTable({ data, del }) {
               <td>
                 <span className="badge badge-primary">{lead.landingPage}</span>
               </td>
-              <td>...</td>
+              <td>
+                {lead.createdAt
+                  ? new Date(lead.createdAt).toLocaleString()
+                  : "-"}
+              </td>
+              <td>
+                <button
+                  className="btn btn-ghost btn-xs text-error"
+                  onClick={() => handleDelete(lead.id)}
+                  title="Delete"
+                >
+                  <BsTrash3 />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

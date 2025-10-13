@@ -30,16 +30,9 @@ export default function LeadForm({ landingPage = "default" }) {
       });
 
       if (res.ok) {
-        alert("Lead submitted successfully!");
-        setFormData({
-          fullName: "",
-          phone: "",
-          postcode: "",
-          treatmentInterest: "",
-          startPlan: "",
-          callbackTime: "",
-          doctorNote: "",
-        });
+        // Redirect to thank you page
+        window.location.href = "/thank-you";
+        return;
       } else {
         const error = await res.json();
         alert(error.message || "Failed to submit lead");
