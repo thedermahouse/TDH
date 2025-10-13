@@ -203,16 +203,21 @@ model ContactUs {
 }
 
 model Lead {
-  id                 Int      @id @default(autoincrement())
-  fullName           String
-  phone              String                // ✅ renamed from mobile
-  postcode           String
-  treatmentInterest  String                // ✅ "Which Skin & Hair treatment"
-  startPlan          String                // ✅ (Immediately, 1 Week, etc.)
-  callbackTime       String                // ✅ (11–1, etc.)
-  doctorNote         String?               // ✅ optional message
-  landingPage        String
-  createdAt          DateTime @default(now())
+  id                Int      @id @default(autoincrement())
+  fullName          String
+  phone             String
+  postcode          String
+  treatmentInterest String
+  startPlan         String
+  callbackTime      String
+  doctorNote        String?
+  landingPage       String
+  utm_source        String?
+  utm_medium        String?
+  utm_campaign      String?
+  utm_term          String?
+  utm_content       String?
+  createdAt         DateTime @default(now())
 }
 
 

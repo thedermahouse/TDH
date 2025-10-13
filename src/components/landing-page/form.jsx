@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function LeadForm({ landingPage = "default" }) {
   const [formData, setFormData] = useState({
@@ -11,6 +11,26 @@ export default function LeadForm({ landingPage = "default" }) {
     callbackTime: "",
     doctorNote: "",
   });
+
+  const [utmParams, setUtmParams] = useState({
+    utm_source: "",
+    utm_medium: "",
+    utm_campaign: "",
+    utm_term: "",
+    utm_content: "",
+  });
+
+  // Capture UTM params from URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    setUtmParams({
+      utm_source: urlParams.get("utm_source") || "",
+      utm_medium: urlParams.get("utm_medium") || "",
+      utm_campaign: urlParams.get("utm_campaign") || "",
+      utm_term: urlParams.get("utm_term") || "",
+      utm_content: urlParams.get("utm_content") || "",
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,13 +46,12 @@ export default function LeadForm({ landingPage = "default" }) {
         body: JSON.stringify({
           ...formData,
           landingPage,
+          ...utmParams, // Include UTM params in the request
         }),
       });
 
       if (res.ok) {
-        // Redirect to thank you page
         window.location.href = "/thank-you";
-        return;
       } else {
         const error = await res.json();
         alert(error.message || "Failed to submit lead");
@@ -81,7 +100,7 @@ export default function LeadForm({ landingPage = "default" }) {
       />
 
       <input
-        type="text"
+        type="number"
         name="postcode"
         placeholder="Postcode"
         value={formData.postcode}
@@ -90,15 +109,17 @@ export default function LeadForm({ landingPage = "default" }) {
         required
       />
 
-      <input
-        type="text"
+      <select
         name="treatmentInterest"
-        placeholder="Which Skin & Hair treatment are you interested in?"
         value={formData.treatmentInterest}
         onChange={handleChange}
         className={fieldClasses}
         required
-      />
+      >
+        <option value="">Which treatment are you interested in?</option>
+        <option value="Skin Treatment">Skin Treatment</option>
+        <option value="Hair Treatment">Hair Treatment</option>
+      </select>
 
       <select
         name="startPlan"

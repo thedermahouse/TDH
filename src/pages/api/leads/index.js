@@ -9,41 +9,58 @@ export default async function handler(req, res) {
   }
 
   if (req.method === "POST") {
-  const {
-    fullName,
-    phone,
-    postcode,
-    treatmentInterest,
-    startPlan,
-    callbackTime,
-    doctorNote,
-    landingPage,
-  } = req.body;
+    const {
+      fullName,
+      phone,
+      postcode,
+      treatmentInterest,
+      startPlan,
+      callbackTime,
+      doctorNote,
+      landingPage,
+      utm_source,
+      utm_medium,
+      utm_campaign,
+      utm_term,
+      utm_content,
+    } = req.body;
 
-  if (!fullName || !phone || !postcode || !treatmentInterest || !startPlan || !callbackTime) {
-    return res.status(400).json({ message: "Required fields missing" });
+    if (
+      !fullName ||
+      !phone ||
+      !postcode ||
+      !treatmentInterest ||
+      !startPlan ||
+      !callbackTime
+    ) {
+      return res.status(400).json({ message: "Required fields missing" });
+    }
+
+    try {
+      const newLead = await db.lead.create({
+        data: {
+          fullName,
+          phone,
+          postcode,
+          treatmentInterest,
+          startPlan,
+          callbackTime,
+          doctorNote,
+          landingPage,
+          utm_source,
+          utm_medium,
+          utm_campaign,
+          utm_term,
+          utm_content,
+        },
+      });
+
+      return res.status(201).json({ message: "Lead created", lead: newLead });
+    } catch (error) {
+      console.error("❌ Lead creation failed:", error);
+      return res.status(500).json({ message: "Error creating lead" });
+    }
   }
-
-  try {
-    const newLead = await db.lead.create({
-      data: {
-        fullName,
-        phone,
-        postcode,
-        treatmentInterest,
-        startPlan,
-        callbackTime,
-        doctorNote,
-        landingPage,
-      },
-    });
-
-    return res.status(201).json({ message: "Lead created", lead: newLead });
-  } catch (error) {
-    console.error("❌ Lead creation failed:", error);
-    return res.status(500).json({ message: "Error creating lead" });
-  }
-}
 
   if (req.method === "DELETE") {
     const { id } = req.body;

@@ -1,10 +1,7 @@
 import React from "react";
 import { BsTrash3 } from "react-icons/bs";
-import { useDialogProvider } from "@/context/DialogProvider";
 
 export default function LeadsTable({ data, del }) {
-  const dialog = useDialogProvider();
-
   const handleDelete = async (id) => {
     await del({ id });
   };
@@ -23,6 +20,11 @@ export default function LeadsTable({ data, del }) {
             <th>Callback Time</th>
             <th>Doctor Note</th>
             <th>Landing Page</th>
+            <th>UTM Source</th>
+            <th>UTM Medium</th>
+            <th>UTM Campaign</th>
+            <th>UTM Term</th>
+            <th>UTM Content</th>
             <th>Date Submitted</th>
             <th>Action</th>
           </tr>
@@ -41,6 +43,11 @@ export default function LeadsTable({ data, del }) {
               <td>
                 <span className="badge badge-primary">{lead.landingPage}</span>
               </td>
+              <td>{lead.utm_source || "-"}</td>
+              <td>{lead.utm_medium || "-"}</td>
+              <td>{lead.utm_campaign || "-"}</td>
+              <td>{lead.utm_term || "-"}</td>
+              <td>{lead.utm_content || "-"}</td>
               <td>
                 {lead.createdAt
                   ? new Date(lead.createdAt).toLocaleString()
