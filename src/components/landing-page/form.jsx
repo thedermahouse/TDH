@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-export default function LeadForm({ landingPage = "default" }) {
+export default function LeadForm() {
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
@@ -32,6 +32,14 @@ export default function LeadForm({ landingPage = "default" }) {
     });
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname.split("/").filter(Boolean);
+      const pageName = path.length ? path[path.length - 1] : "default";
+      setFormData((prev) => ({ ...prev, landingPage: pageName }));
+    }
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -45,7 +53,6 @@ export default function LeadForm({ landingPage = "default" }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          landingPage,
           ...utmParams, // Include UTM params in the request
         }),
       });

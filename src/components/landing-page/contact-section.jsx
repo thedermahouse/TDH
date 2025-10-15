@@ -1,9 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LeadForm from "./form";
 
 const ContactSection = () => {
+  const [currentPage, setCurrentPage] = useState("default");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const page = window.location.pathname.replace("/", "") || "default";
+      setCurrentPage(page);
+    }
+  }, []);
   return (
     <section className="w-full bg-gray-50 py-16 px-4">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -28,7 +36,7 @@ const ContactSection = () => {
 
         {/* Right: Form */}
 
-        <LeadForm landingPage="dermatology-contact" />
+        <LeadForm landingPage={currentPage} />
       </div>
     </section>
   );

@@ -1,7 +1,17 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import LeadForm from "./form";
 
-const Banner = ({ title, subtitle, backgroundImage, landingPage }) => {
+const Banner = ({ title, subtitle, backgroundImage }) => {
+  const [currentPage, setCurrentPage] = useState("default");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const page = window.location.pathname.replace("/", "") || "default";
+      setCurrentPage(page);
+    }
+  }, []);
+
   const bannerStyle = {
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: "cover",
@@ -11,21 +21,21 @@ const Banner = ({ title, subtitle, backgroundImage, landingPage }) => {
   return (
     <section
       style={bannerStyle}
-      className="sm:min-h-[100vh] min-h-[100vsh]  relative sm:flex items-center sm:justify-start p-8 text-white "
+      className="sm:min-h-[100vh] min-h-[100vh] relative sm:flex items-center sm:justify-start p-8 text-white"
     >
       {/* Content */}
-      <div className=" z-10 max-w-2xl text-center sm:text-left">
+      <div className="z-10 max-w-2xl text-center sm:text-left">
         <h1 className="text-4xl md:text-5xl text-white font-primary font-normal">
           {title}
         </h1>
         {subtitle && (
           <p className="mt-4 text-lg font-primary md:text-xl">{subtitle}</p>
         )}
-
-        {/* Lead Form */}
       </div>
-      <div className="sm:absolute top-20 sm:right-20  mt-[140px]">
-        <LeadForm landingPage={landingPage} />
+
+      {/* Lead Form */}
+      <div className="sm:absolute top-20 sm:right-20 mt-[140px]">
+        <LeadForm landingPage={currentPage} />
       </div>
     </section>
   );
