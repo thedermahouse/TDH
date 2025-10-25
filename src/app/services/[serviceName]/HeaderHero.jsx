@@ -7,6 +7,30 @@ const HeaderHero = ({ service }) => {
       <div className="container m-auto">
         <div className="w-10/12 m-auto">
           <div className=" py-10 lg:py-32 text-center"></div>
+          {/* Breadcrumbs */}
+          <nav aria-label="Breadcrumb" className="mb-4 px-24">
+            <ol className="flex items-center gap-2 text-sm text-gray-600">
+              <li>
+                <Link href="/" className="hover:text-gray-900">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <span className="text-gray-400">/</span>
+              </li>
+              <li>
+                <Link href="/services" className="hover:text-gray-900">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <span className="text-gray-400">/</span>
+              </li>
+              <li aria-current="page" className="font-medium text-gray-800">
+                {service?.name}
+              </li>
+            </ol>
+          </nav>
           <div>
             <div>
               <div className="w-full grid lg:grid-cols-2 grid-cols-1 text-black">

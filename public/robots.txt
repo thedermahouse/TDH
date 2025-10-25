@@ -1,4 +1,21 @@
 User-agent: *
-Disallow:
+Disallow: /api/files/576
+Disallow: /api/files/263
+Disallow: /api/files/601
+Disallow: /api/files/631
+Disallow: /api/files/595
+Disallow: /api/files/397
+Disallow: /api/files/630
+Disallow: /api/files/221
+Disallow: /api/files/575
+Disallow: /api/files/639
+Disallow: /api/files/473
+Disallow: /api/files/640
+Disallow: /api/files/633
+Disallow: /api/files/641
+Disallow: /api/files/636
+Disallow: /api/files/605
+Disallow: /api/files/634
+Disallow: /_next/static/media/904be59b21bd51cb-s.p.woff2
 
 Sitemap: https://thedermahouse.com/sitemap.xml
