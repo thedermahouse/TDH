@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import FaqJsonLd from "@/app/faqschema";
 
 const faqs = [
   {
@@ -66,6 +67,7 @@ export default function FAQSection() {
 
   return (
     <section className="max-w-7xl mx-auto container py-10 px-4">
+      <FaqJsonLd faqs={faqs} />
       <h2 className="font-primary text-4xl lg:max-w-screen-sm text-black lg:w-3/4 w-full mb-6">
         FAQs
       </h2>

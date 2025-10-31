@@ -8,6 +8,7 @@ import Testimonials from "@/components/home/sections/Testimonials";
 import FAQSection from "./sub-service/[subServiceName]/FAQSection";
 import PricingSection from "./sub-service/[subServiceName]/PricingSection";
 import Link from "next/link";
+import BreadcrumbJsonLd from "@/app/breadcrumb";
 
 const serviceDetails = async (name) => {
   return await db.Services.findFirst({
@@ -62,6 +63,17 @@ export default async function Page({ params }) {
     notFound();
   }
 
+  // Breadcrumb items for this service page
+  const items = [
+    { name: "Home", url: "https://thedermahouse.com/" },
+    { name: "Services", url: "https://thedermahouse.com/services" },
+    {
+      name: service.name,
+      url: `https://thedermahouse.com/services/${encodeURIComponent(
+        serviceName
+      )}`,
+    },
+  ];
   // Check if the service is IV Therapy (ID 17)
   const isIVTherapy = service.id === 17;
   let sectionsToRender = service.sections || [];
@@ -74,6 +86,7 @@ export default async function Page({ params }) {
 
   return (
     <main className="min-h-screen ">
+      <BreadcrumbJsonLd items={items} />
       <HeaderHero service={service} /> {/* Always use service data */}
       {isIVTherapy ? (
         <div className="container mx-auto px-4">

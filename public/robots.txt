@@ -18,4 +18,24 @@ Disallow: /api/files/605
 Disallow: /api/files/634
 Disallow: /_next/static/media/904be59b21bd51cb-s.p.woff2
 
+# Non-standard noindex directive (may be honored by some crawlers)
+Noindex: /api/files/576
+Noindex: /api/files/263
+Noindex: /api/files/601
+Noindex: /api/files/631
+Noindex: /api/files/595
+Noindex: /api/files/397
+Noindex: /api/files/630
+Noindex: /api/files/221
+Noindex: /api/files/575
+Noindex: /api/files/639
+Noindex: /api/files/473
+Noindex: /api/files/640
+Noindex: /api/files/633
+Noindex: /api/files/641
+Noindex: /api/files/636
+Noindex: /api/files/605
+Noindex: /api/files/634
+Noindex: /_next/static/media/904be59b21bd51cb-s.p.woff2
+
 Sitemap: https://thedermahouse.com/sitemap.xml

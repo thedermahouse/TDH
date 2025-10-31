@@ -9,6 +9,71 @@ import Script from "next/script";
 import PixelTracker from "@/components/pixeltracker"; // New client-side component
 
 export default function RootLayout({ children }) {
+
+   const organizationLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://thedermahouse.com/#organization",
+    "name": "The Derma House",
+    "url": "https://thedermahouse.com/",
+    "logo": "https://thedermahouse.com/logo.svg",
+    "sameAs": [
+      "https://www.facebook.com/people/The-Dermahouse/61572606715527/",
+      "https://www.instagram.com/thedermahouseofficial/",
+      "https://www.linkedin.com/company/the-dermahouse",
+      "https://www.youtube.com/@thedermahouse"
+    ],
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "+919463762930",
+        "contactType": "customer service",
+        "areaServed": "IN",
+        "availableLanguage": ["English"]
+      }
+    ]
+  };
+
+  const localBusinessLd = {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "@id": "https://thedermahouse.com/#localbusiness",
+    "name": "The Derma House - Santacruz",
+    "url": "https://thedermahouse.com/",
+    "image": "https://thedermahouse.com/logo.svg",
+    "parentOrganization": { "@id": "https://thedermahouse.com/#organization" },
+    "telephone": "+919463762930",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Linking Road",
+      "addressLocality": "Mumbai",
+      "postalCode": "400050",
+      "addressCountry": "IN"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+        ],
+        "opens": "11:00",
+        "closes": "20:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Sunday"],
+        "opens": "11:00",
+        "closes": "16:00"
+      }
+    ],
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "19.0623",
+      "longitude": "72.8266"
+    },
+    "priceRange": "₹₹"
+  };
+
   return (
     <html lang="en">
       <head>
@@ -49,6 +114,14 @@ export default function RootLayout({ children }) {
       gtag('config', 'G-7RLXWMJCS9'); // Replace with your GA4 Measurement ID
     `}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+        />
       </head>
       <body
         className={`antialiased ${montserrat.variable} ${hallengerSerif.variable}`}
