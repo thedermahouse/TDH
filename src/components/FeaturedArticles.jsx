@@ -96,7 +96,7 @@ export default function FeatureArticlesSection() {
                           })}
                         </p>
                         <h3 className="text-2xl font-medium text-gray-800">
-                          {truncate(a.title, 80)}
+                          {truncate(a.title, 40)}
                         </h3>
                       </div>
                     </div>
