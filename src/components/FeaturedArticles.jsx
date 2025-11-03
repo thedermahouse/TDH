@@ -95,7 +95,7 @@ export default function FeatureArticlesSection() {
                             year: "numeric",
                           })}
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800">
+                        <h3 className="text-2xl font-medium text-gray-800">
                           {truncate(a.title, 80)}
                         </h3>
                       </div>
