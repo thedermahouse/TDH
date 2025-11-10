@@ -1,13 +1,15 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import Slider from "react-slick";
+import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ChevronLeft, ChevronRight } from "lucide-react"; // optional icon lib
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// Custom arrow components
-function NextArrow(props) {
-  const { onClick } = props;
+// ✅ Only dynamic import — no top-level import for react-slick
+const SlickSlider = dynamic(() => import("react-slick"), { ssr: false });
+
+function NextArrow({ onClick }) {
   return (
     <button
       className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
@@ -18,8 +20,7 @@ function NextArrow(props) {
   );
 }
 
-function PrevArrow(props) {
-  const { onClick } = props;
+function PrevArrow({ onClick }) {
   return (
     <button
       className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
@@ -32,13 +33,22 @@ function PrevArrow(props) {
 
 export default function FeatureArticlesSection() {
   const [articles, setArticles] = useState([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    // ✅ Prevent hydration mismatch by only rendering slider after mount
+    setIsMounted(true);
+
     fetch("/api/feature-articles")
       .then((res) => res.json())
       .then((data) => setArticles(data.data || []))
       .catch((err) => console.error("Error fetching articles:", err));
+
+    // ✅ Trigger resize for slick recalculation
+    setTimeout(() => window.dispatchEvent(new Event("resize")), 500);
   }, []);
+
+  if (!isMounted) return null; // prevents server vs client DOM diff
 
   const settings = {
     dots: false,
@@ -66,26 +76,23 @@ export default function FeatureArticlesSection() {
         <h2 className="text-4xl font-primary font-bold text-gray-900 mb-10">
           Featured Articles
         </h2>
-        {/* <p className="text-gray-500 mb-10">
-          Expert skin care tips, trends and science driven advice.
-        </p> */}
 
         {articles.length > 0 ? (
           <div className="relative">
-            <Slider {...settings}>
+            <SlickSlider {...settings}>
               {articles.map((a) => (
                 <div key={a.id} className="px-3">
                   <a
                     href={a.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className=" text-sm font-medium mt-2 inline-block "
+                    className="text-sm font-medium mt-2 inline-block"
                   >
-                    <div className=" overflow-hidden  transition-all duration-300">
+                    <div className="overflow-hidden transition-all duration-300">
                       <img
                         src={a.image}
                         alt={a.title}
-                        className="w-full h-72 object-cover rounded-2xl"
+                        className="w-full aspect-[1/1] object-cover rounded-2xl"
                       />
                       <div className="p-4">
                         <p className="text-gray-400 text-sm mb-1">
@@ -103,7 +110,7 @@ export default function FeatureArticlesSection() {
                   </a>
                 </div>
               ))}
-            </Slider>
+            </SlickSlider>
           </div>
         ) : (
           <p className="text-gray-400 text-center">No featured articles yet.</p>
