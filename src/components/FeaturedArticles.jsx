@@ -90,9 +90,9 @@ export default function FeatureArticlesSection() {
                     href={a.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
+                    className="block bg-white  shadow-sm overflow-hidden hover:shadow-md transition-all duration-300"
                   >
-                    <div className="aspect-square w-full overflow-hidden">
+                    <div className="aspect-square w-full rounded-2xl overflow-hidden">
                       <img
                         src={a.image}
                         alt={a.title}
