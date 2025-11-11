@@ -23,7 +23,6 @@ enum PartType {
   TOP_NAVIGATION
   FOOTER
   CONTACT_US
-  INTERNATIONAL   // ✅ add this line
 }
 
 
