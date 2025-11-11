@@ -8,11 +8,9 @@ datasource db {
 }
 
 model PartContents {
-  id      Int    @id @default(autoincrement())
-  key     String @unique
+  key     PartType @id @unique
   content Json
 }
-
 
 enum PartType {
   HOME
@@ -24,7 +22,6 @@ enum PartType {
   FOOTER
   CONTACT_US
 }
-
 
 model Services {
   id                               Int           @id @default(autoincrement())
@@ -157,13 +154,6 @@ model LandingTestimonial {
   @@index([landingPageId, priority])
 }
 
-model Reel {
-  id        Int      @id @default(autoincrement())
-  videoUrl  String
-  link      String
-  createdAt DateTime @default(now())
-}
-
 
 
 enum PlanIcon {
@@ -206,6 +196,12 @@ model FeatureArticle {
   updatedAt DateTime @updatedAt
 }
 
+model Reel {
+  id        Int      @id @default(autoincrement())
+  videoUrl  String
+  link      String
+  createdAt DateTime @default(now())
+}
 
 
 model ContactUs {
