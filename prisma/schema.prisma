@@ -21,7 +21,9 @@ enum PartType {
   TOP_NAVIGATION
   FOOTER
   CONTACT_US
+  INTERNATIONAL   // ✅ add this line
 }
+
 
 model Services {
   id                               Int           @id @default(autoincrement())
@@ -152,6 +154,13 @@ model LandingTestimonial {
   landingPage   LandingPage? @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
 
   @@index([landingPageId, priority])
+}
+
+model Reel {
+  id        Int      @id @default(autoincrement())
+  videoUrl  String
+  link      String
+  createdAt DateTime @default(now())
 }
 
 
