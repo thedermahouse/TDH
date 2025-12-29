@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export default function ReelsSection() {
   const [reels, setReels] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const videoRefs = useState({})[0];
 
   useEffect(() => {
     fetch("/api/reels")
@@ -22,6 +23,18 @@ export default function ReelsSection() {
 
     return () => clearInterval(interval);
   }, [reels.length]);
+
+  useEffect(() => {
+    // Play videos when they become visible
+    Object.keys(videoRefs).forEach((key) => {
+      const video = videoRefs[key];
+      if (video) {
+        video.play().catch(() => {
+          // Autoplay failed, video will show poster
+        });
+      }
+    });
+  }, [currentIndex, videoRefs]);
 
   const getVisibleReels = () => {
     if (reels.length === 0) return [];
@@ -108,21 +121,31 @@ export default function ReelsSection() {
                 whileHover={position === 0 ? { scale: 1.05, rotateY: 0 } : {}}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
               >
+                {/* Poster Image Fallback */}
+                {reel.thumbnail && (
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: `url(${reel.thumbnail})` }}
+                  />
+                )}
+
                 {/* Video */}
                 <video
+                  ref={(el) => {
+                    if (el) videoRefs[`${currentIndex}-${idx}`] = el;
+                  }}
                   src={reel.videoUrl}
-                  autoPlay
                   loop
                   muted
                   playsInline
-                  preload="auto"
-                  webkit-playsinline="true"
-                  x5-playsinline="true"
+                  preload="metadata"
                   className="absolute inset-0 w-full h-full object-cover"
-                  poster={reel.thumbnail}
-                  onLoadedMetadata={(e) => {
-                    // Force play on iOS
-                    e.target.play().catch(err => console.log("Autoplay prevented:", err));
+                  onCanPlay={(e) => {
+                    e.target.play().catch(() => {});
+                  }}
+                  onError={(e) => {
+                    console.error("Video error:", reel.videoUrl);
+                    e.target.style.display = 'none';
                   }}
                 />
 
