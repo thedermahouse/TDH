@@ -29,18 +29,40 @@ export default function ReelsSection() {
         speed={2500}
         centeredSlides={true}
         spaceBetween={20}
-        className="px-6"
+        className=""
+        slidesOffsetBefore={16}
+        slidesOffsetAfter={16}
         breakpoints={{
-          0: { slidesPerView: 1.5, spaceBetween: 16 }, // 📱 mobile → 1.5 reels
-          640: { slidesPerView: 2.5, spaceBetween: 20 }, // 🧳 tablet
-          1024: { slidesPerView: 3.5, spaceBetween: 24 }, // 💻 small laptop
-          1440: { slidesPerView: 4.5, spaceBetween: 28 }, // 🖥️ desktop
+          0: { 
+            slidesPerView: 1.5, 
+            spaceBetween: 16,
+            slidesOffsetBefore: 16,
+            slidesOffsetAfter: 16
+          },
+          640: { 
+            slidesPerView: 2.5, 
+            spaceBetween: 20,
+            slidesOffsetBefore: 24,
+            slidesOffsetAfter: 24
+          },
+          1024: { 
+            slidesPerView: 3.5, 
+            spaceBetween: 24,
+            slidesOffsetBefore: 32,
+            slidesOffsetAfter: 32
+          },
+          1440: { 
+            slidesPerView: 4.5, 
+            spaceBetween: 28,
+            slidesOffsetBefore: 32,
+            slidesOffsetAfter: 32
+          },
         }}
       >
         {reels.map((reel, index) => (
           <SwiperSlide key={index} className="flex justify-center">
             <motion.div
-              className="relative aspect-[9/16] overflow-hidden rounded-2xl shadow-lg"
+              className="relative aspect-[9/16] overflow-hidden rounded-2xl shadow-lg w-full"
               whileHover={{ scale: 1.03 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -52,6 +74,7 @@ export default function ReelsSection() {
                 playsInline
                 className="object-cover w-full h-full"
               />
+
               <a
                 href={reel.link}
                 target="_blank"
