@@ -45,9 +45,9 @@ export default function ReelsSection() {
   }
 
   return (
-    <section className="w-full bg-white overflow-hidden">
+    <section className="w-full bg-gradient-to-b from-black via-purple-950 to-black py-20 overflow-hidden">
       <motion.h2 
-        className="text-center text-black text-4xl md:text-5xl font-bold mb-4 tracking-tight"
+        className="text-center text-white text-4xl md:text-5xl font-bold mb-16 tracking-tight"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -55,7 +55,7 @@ export default function ReelsSection() {
         Follow Us on <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">Instagram</span>
       </motion.h2>
 
-      <div className="relative h-[600px] md:h-[600px] flex items-center justify-center px-4">
+      <div className="relative h-[600px] md:h-[700px] flex items-center justify-center px-4">
         {getVisibleReels().map((reel, idx) => {
           const position = reel.position;
           let scale = 0.65;
@@ -101,7 +101,7 @@ export default function ReelsSection() {
               }}
             >
               <motion.div
-                className="relative bg-gradient-to-br from-slate-200/40 to-slate-100/40 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm border border-white/10"
+                className="relative bg-gradient-to-br from-purple-900/40 to-pink-900/40 rounded-3xl overflow-hidden shadow-2xl backdrop-blur-sm border border-white/10"
                 style={{
                   aspectRatio: "9/16"
                 }}
@@ -115,8 +115,15 @@ export default function ReelsSection() {
                   loop
                   muted
                   playsInline
+                  preload="auto"
+                  webkit-playsinline="true"
+                  x5-playsinline="true"
                   className="absolute inset-0 w-full h-full object-cover"
                   poster={reel.thumbnail}
+                  onLoadedMetadata={(e) => {
+                    // Force play on iOS
+                    e.target.play().catch(err => console.log("Autoplay prevented:", err));
+                  }}
                 />
 
                 {/* Gradient Overlay */}
@@ -128,7 +135,7 @@ export default function ReelsSection() {
                     href={reel.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-bold hover:from-pink-600 hover:to-purple-700 transition-all shadow-lg flex items-center gap-2 z-20 whitespace-nowrap"
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-bold hover:from-pink-600 hover:to-purple-700 transition-all shadow-lg flex items-center gap-2 z-20"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.5 }}
@@ -162,7 +169,7 @@ export default function ReelsSection() {
       </div>
 
       {/* Navigation Dots */}
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex justify-center gap-2 mt-12">
         {reels.map((_, index) => (
           <button
             key={index}
