@@ -2,6 +2,7 @@ import SectionsRender from "@/components/admin/home-editor/SectionsRender";
 import FeatureArticlesSection from "@/components/FeaturedArticles";
 import HomeFAQ from "@/components/home/sections/HomeFAQ";
 import ReelsSection from "@/components/reelsSection";
+import ReelsSectionVerisionTwo from "@/components/reelsSectionVersionTwo";
 import getPart from "@/helpers/getPart";
 import Head from "next/head";
 
@@ -111,7 +112,8 @@ export default async function Home() {
 
       <main>
         <SectionsRender sections={part?.content?.sections} />
-        <ReelsSection />
+        {/* <ReelsSection /> */}
+        <ReelsSectionVerisionTwo />
         <FeatureArticlesSection />
         <HomeFAQ />
         <div></div>
