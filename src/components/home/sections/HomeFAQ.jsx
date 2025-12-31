@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "What skincare treatments are available at the clinic?",
     answer:
-      "Q switch laser, Laser hair Reduction, Hydrafacial, Medifacials, Morpheus 8 (microneedling with RF), Dermapen (Microneedling), Forma (RF skin tightening), Medical peels, Masks, Fillers, Botox, Hair and skin PRP, GFC, Hair mesotherapy.",
+      "Q switch laser, Laser hair Reduction, Hydrafacial, Medifacials, Morpheus 8 (microneedling with RF), Dermapen (Microneedling), Forma (RF skin tightening), Medical peels, Masks, Fillers, Anti-wrinkle Treatment, Hair and skin PRP, GFC, Hair mesotherapy.",
   },
   {
     question:
