@@ -28,20 +28,24 @@ const Booking = () => {
   const bookingOptions = [
     {
       title: "Book a Consultation",
-      url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
+      url: "https://thedermahouse.com/contact-us",
     },
-    {
-      title: "Book a Service",
-      url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
-    },
-    {
-      title: "Buy a Gift Card",
-      url: "https://booking.thedermahouse.com/webstoreNew/giftcards/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
-    },
-    {
-      title: "Buy a Membership",
-      url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
-    },
+    // {
+    //   title: "Book a Consultation",
+    //   url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
+    // },
+    // {
+    //   title: "Book a Service",
+    //   url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
+    // },
+    // {
+    //   title: "Buy a Gift Card",
+    //   url: "https://booking.thedermahouse.com/webstoreNew/giftcards/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
+    // },
+    // {
+    //   title: "Buy a Membership",
+    //   url: "https://booking.thedermahouse.com/webstoreNew/services/a546bd4e-b550-4b6f-a0b0-d645d925bde5",
+    // },
   ];
 
   return (
