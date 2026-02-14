@@ -32,6 +32,25 @@ function PrevArrow(props) {
   );
 }
 
+const hardcodedArticles = [
+    {
+    id: "static-1",
+    title: "AestheticMed: Reader Feature",
+    image: "/api/files/587", // reused image
+    date: "2026-01-09T00:00:00.000Z", // Random January 2026
+    link: "https://mag.aestheticmed.in/magazine/reader/278277?pageNumber=1",
+  },
+  {
+    id: "static-2",
+    title: "Should You Toss Out Skincare That Hasn’t Yet Expired?",
+    image: "/api/files/661", // reused image
+    date: "2025-12-18T00:00:00.000Z", // Random December 2025
+    link: "https://www.theestablished.com/self/beauty/should-you-toss-out-skincare-that-hasnt-yet-expired",
+  },
+
+];
+
+
 export default function FeatureArticlesSection() {
   const [articles, setArticles] = useState([]);
   const [isMounted, setIsMounted] = useState(false);
@@ -51,11 +70,13 @@ export default function FeatureArticlesSection() {
     setIsMounted(true);
 
     fetch("/api/feature-articles")
-      .then((res) => res.json())
-      .then((data) => setArticles(data.data || []))
-      .catch((err) => console.error("Error fetching articles:", err));
+        .then((res) => res.json())
+        .then((data) => {
+          const apiArticles = data.data || [];
+          setArticles([...hardcodedArticles, ...apiArticles]);
+        })
+        .catch((err) => console.error("Error fetching articles:", err));
 
-    return () => window.removeEventListener("resize", updateSlides);
   }, []);
 
   if (!isMounted) return null;
