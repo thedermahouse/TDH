@@ -201,13 +201,13 @@ export default async function Footer() {
             <div className="text-center md:text-left">
               Copyright © 2025 TheDermaHouse - All rights reserved. | Developed
               by{" "}
-              <Link
+              {/* <Link
                 href="https://adatechnologies.com"
                 target="_blank"
                 className=""
               >
                 AdaTechnologies
-              </Link>
+              </Link> */}
             </div>
             {socialSection && (
               <div className="flex justify-center md:justify-end">
